@@ -124,7 +124,7 @@
 
 
 ///
-
+const dotenv = require("dotenv");
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -134,6 +134,8 @@ const path = require('path');
 const cors = require("cors");
 const server = http.createServer(app);
 const io = new Server(server);
+dotenv.config();//load dotenv config
+const PORT = process.env.PORT || 5000;
 app.use(
     cors({
       origin:[ "http://localhost:5000", "https://codes-sync.vercel.app/",""],//"*",  //FOR FRONTEND..//  methods: ["GET", "POST", "PUT", "DELETE"],..VVI..to entertain frontend req.[[http://localhost:3000]] -->:["http://localhost:3000","https://mystudynotion.vercel.app","https://study1-jlkmw7ckr-mohit1721s-projects.vercel.app"], --------------------------["https://mystudynotion.vercel.app"]  
@@ -141,11 +143,11 @@ app.use(
     })
   );
 //
-app.use(express.static('build'));
-//page refresh ....3:43:00-->page refresh..krne se server pe koi v request h..index.html ko serve kr dena
-app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.use(express.static('build'));
+// //page refresh ....3:43:00-->page refresh..krne se server pe koi v request h..index.html ko serve kr dena
+// app.use((req, res, next) => {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 const userSocketMap = new Map();
 //const userSocketMap2={};
@@ -201,6 +203,6 @@ io.on('connection', (socket) => {
     });
 });
 
-const PORT = process.env.PORT || 5000;
+
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
